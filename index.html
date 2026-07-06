@@ -383,6 +383,33 @@ footer .fine {
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- Scroll-to-top button ---------- */
+.to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--brass);
+  background: var(--ivory);
+  color: var(--brass-dim);
+  font-family: var(--mono);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease, color 0.2s ease;
+  z-index: 60;
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { background: var(--ink); color: var(--brass); }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: opacity 0.15s ease; } }
 </style>
 </head>
 <body>
@@ -392,7 +419,7 @@ footer .fine {
      ============================================================ -->
 <header class="site-nav">
   <div class="nav-inner">
-    <div class="name">Jackie Chen</div>
+    <a class="name" href="index.html" style="text-decoration:none;">Jackie Chen</a>
     <nav>
       <a href="#education">Education</a>
       <a href="#experience">Experience</a>
@@ -562,7 +589,6 @@ footer .fine {
       <div>
         <h4>Certificates</h4>
         <div class="pill-row">
-          <span class="pill">Eastdil Secured Real Estate Finance</span>
           <span class="pill">AmplifyMe Finance Accelerator</span>
           <span class="pill">365 Alternative Investments</span>
           <span class="pill">WSO Real Estate Modelling</span>
@@ -601,6 +627,11 @@ footer .fine {
   </div>
 </footer>
 
+<!-- ============================================================
+     SCROLL TO TOP — appears after scrolling down, click to return up
+     ============================================================ -->
+<button class="to-top" id="toTop" aria-label="Scroll to top">↑</button>
+
 <script>
 // Simple scroll-reveal: fades sections up into place once they enter view.
 // Safe to delete this whole <script> block if you'd rather everything show instantly.
@@ -614,6 +645,15 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 revealEls.forEach(el => io.observe(el));
+
+// Scroll-to-top button: shows after scrolling past one viewport height.
+const toTopBtn = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTopBtn.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.6);
+});
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 </script>
 
 </body>
