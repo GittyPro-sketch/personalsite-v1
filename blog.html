@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes — Jackie Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* ============================================================
+   EDIT ME: kept identical to index.html so both pages match.
+   If you change a value here, make the same change in index.html.
+   ============================================================ */
+:root {
+  --ink:        #0E1A2B;   /* deep navy — dark sections, headline text */
+  --ivory:      #F6F3EC;   /* warm paper background */
+  --brass:      #B08D57;   /* accent gold — rules, links, small caps */
+  --brass-dim:  #8C6F45;   /* darker brass, for text-on-ivory that needs contrast */
+  --charcoal:   #1C1F24;   /* body text on ivory */
+  --slate:      #5B6472;   /* secondary / caption text */
+  --hairline:   rgba(14,26,43,0.14);
+  --hairline-dark: rgba(246,243,236,0.18);
+
+  --display: 'Fraunces', serif;
+  --body:    'Inter', sans-serif;
+  --mono:    'IBM Plex Mono', monospace;
+
+  --max: 880px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--charcoal);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ---------- Ledger line-item labels (signature element) ---------- */
+.line-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass-dim);
+  margin-bottom: 18px;
+}
+.line-tag .num {
+  border: 1px solid var(--brass);
+  border-radius: 2px;
+  padding: 2px 7px;
+  color: var(--brass-dim);
+}
+
+/* ---------- Top nav ---------- */
+header.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246,243,236,0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-inner .name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 0.01em;
+}
+.nav-inner nav a {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--slate);
+  margin-left: 28px;
+  transition: color 0.2s ease;
+}
+.nav-inner nav a:hover, .nav-inner nav a.current { color: var(--brass-dim); }
+.nav-inner nav { display: flex; }
+@media (max-width: 640px) {
+  .nav-inner nav a { margin-left: 14px; font-size: 10.5px; }
+}
+
+/* ---------- Page header (echoes the hero, lighter weight) ---------- */
+.page-header {
+  padding: 90px 0 50px;
+  border-bottom: 1px solid var(--hairline);
+}
+.page-header .eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass-dim);
+  margin-bottom: 20px;
+}
+.page-header h1 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.08;
+  margin: 0 0 18px;
+  max-width: 620px;
+}
+.page-header h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brass-dim);
+}
+.page-header p {
+  color: var(--slate);
+  max-width: 520px;
+  margin: 0;
+  font-size: 17px;
+}
+
+/* ---------- Post index, styled as ledger entries ---------- */
+section.posts { padding: 60px 0 100px; }
+.post-list { display: flex; flex-direction: column; }
+.post-card {
+  padding: 34px 0;
+  border-bottom: 1px solid var(--hairline);
+  transition: padding-left 0.2s ease;
+}
+.post-card:first-child { padding-top: 0; }
+.post-card:hover { padding-left: 8px; }
+
+.post-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.post-rev {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--brass-dim);
+  border: 1px solid var(--brass);
+  border-radius: 2px;
+  padding: 2px 7px;
+}
+.post-date {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--slate);
+}
+.post-card h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 24px;
+  margin: 0 0 12px;
+}
+.post-card h3 a { color: var(--charcoal); text-decoration: none; }
+.post-card h3 a:hover { color: var(--brass-dim); }
+.post-card p.excerpt {
+  margin: 0 0 16px;
+  color: var(--slate);
+  font-size: 15px;
+  max-width: 620px;
+}
+.post-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.post-tags span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brass-dim);
+  border: 1px solid var(--hairline);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+/* ---------- Contact / footer (matches index.html exactly) ---------- */
+footer {
+  background: var(--ink);
+  color: var(--ivory);
+  padding: 80px 0 40px;
+}
+footer h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(30px, 4vw, 46px);
+  margin: 0 0 28px;
+  max-width: 620px;
+}
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  margin-bottom: 64px;
+}
+.contact-links a {
+  font-family: var(--mono);
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--ivory);
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 3px;
+}
+.contact-links a:hover { color: var(--brass); }
+footer .fine {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(246,243,236,0.4);
+  border-top: 1px solid var(--hairline-dark);
+  padding-top: 24px;
+}
+
+/* Fade-up reveal on scroll */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ============================================================
+     NAV — identical structure to index.html, "current" marks Notes
+     ============================================================ -->
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="name">Jackie Chen</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="blog.html" class="current">Notes</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     PAGE HEADER — edit the blurb here
+     ============================================================ -->
+<section class="page-header">
+  <div class="wrap">
+    <div class="eyebrow">Field Notes &amp; Ledger Entries</div>
+    <h1>Notes on <em>numbers</em>, and the work behind them.</h1>
+    <p>
+      Short write-ups on underwriting, modelling, tax, and audit — things
+      learned on the job, kept here the way a good workpaper keeps its
+      references.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ALL POSTS — this is the full list. To add a new post:
+     1. Duplicate a .post-card block below.
+     2. Bump the post-rev number (REV.04, REV.05, ...).
+     3. Update the title, date, excerpt, and tags.
+     ============================================================ -->
+<section class="posts">
+  <div class="wrap">
+    <div class="post-list reveal">
+
+      <article class="post-card">
+        <div class="post-head">
+          <span class="post-rev">REV.03</span>
+          <span class="post-date">Jul 2026</span>
+        </div>
+        <h3><a href="#">What underwriting a multifamily deal actually teaches you about spreadsheets</a></h3>
+        <p class="excerpt">
+          Placeholder — swap in your real post text here. A few lines on what
+          the piece covers is enough to pull readers in.
+        </p>
+        <div class="post-tags">
+          <span>Real Estate</span>
+          <span>Excel</span>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-head">
+          <span class="post-rev">REV.02</span>
+          <span class="post-date">Jun 2026</span>
+        </div>
+        <h3><a href="#">Notes from building a DCF model from scratch</a></h3>
+        <p class="excerpt">
+          Placeholder — replace with your own excerpt. Keep it short, one to
+          two sentences, just enough to set up the post.
+        </p>
+        <div class="post-tags">
+          <span>Finance</span>
+          <span>Modelling</span>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-head">
+          <span class="post-rev">REV.01</span>
+          <span class="post-date">May 2026</span>
+        </div>
+        <h3><a href="#">Why I'm studying sustainability and finance together</a></h3>
+        <p class="excerpt">
+          Placeholder — this is where your first post's summary goes. Edit
+          the title, date, tags, and text to match.
+        </p>
+        <div class="post-tags">
+          <span>Sustainability</span>
+          <span>Personal</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT / FOOTER — identical to index.html
+     ============================================================ -->
+<footer id="contact">
+  <div class="wrap">
+    <h2>Have a project, a paper, or a question about a post? Send it over.</h2>
+    <div class="contact-links">
+      <a href="mailto:j2465che@uwaterloo.ca">j2465che@uwaterloo.ca</a>
+      <a href="tel:+16475093577">(647) 509-3577</a>
+      <a href="https://www.linkedin.com/in/jackiezpchen/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="fine">Toronto, Ontario · Updated 2026</div>
+  </div>
+</footer>
+
+<script>
+// Fades .reveal elements into place as they scroll into view.
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
