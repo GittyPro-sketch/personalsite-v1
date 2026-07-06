@@ -9,6 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
+
+/* ============================================================
+   EDIT ME: kept identical to index.html so both pages match.
+   If you change a value here, make the same change in index.html.
+   ============================================================ */
 :root {
   --ink:        #0E1A2B;   /* deep navy — dark sections, headline text */
   --ivory:      #F6F3EC;   /* warm paper background */
@@ -240,16 +245,45 @@ footer .fine {
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- Scroll-to-top button ---------- */
+.to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--brass);
+  background: var(--ivory);
+  color: var(--brass-dim);
+  font-family: var(--mono);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease, color 0.2s ease;
+  z-index: 60;
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { background: var(--ink); color: var(--brass); }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: opacity 0.15s ease; } }
 </style>
 
 </head>
 <body>
 
+<!-- ============================================================
+     NAV — identical structure to index.html, "current" marks Notes
+     ============================================================ -->
 <header class="site-nav">
   <div class="nav-inner">
-    <div class="name">Jackie Chen</div>
+    <a class="name" href="index.html" style="text-decoration:none;">Jackie Chen</a>
     <nav>
-      <a href="index.html">Jackie Chen</a>
       <a href="index.html">Home</a>
       <a href="index.html#experience">Experience</a>
       <a href="blog.html" class="current">Notes</a>
@@ -350,6 +384,11 @@ footer .fine {
   </div>
 </footer>
 
+<!-- ============================================================
+     SCROLL TO TOP — appears after scrolling down, click to return up
+     ============================================================ -->
+<button class="to-top" id="toTop" aria-label="Scroll to top">↑</button>
+
 <script>
 // Fades .reveal elements into place as they scroll into view.
 const revealEls = document.querySelectorAll('.reveal');
@@ -362,6 +401,15 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 revealEls.forEach(el => io.observe(el));
+
+// Scroll-to-top button: shows after scrolling past one viewport height.
+const toTopBtn = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTopBtn.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.6);
+});
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 </script>
 </body>
 </html>
